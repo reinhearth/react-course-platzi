@@ -21,13 +21,23 @@ const App = () => {
       {initialState.mylist?.length > 0 && (
         <Categories title="Mi Lista">
           <Carousel>
-            <CarouselItem />
+            {initialState.mylist.map((item) => (
+              <CarouselItem key={item.id} {...item} />
+            ))}
           </Carousel>
         </Categories>
       )}
       <Categories title="Tendencias">
         <Carousel>
           {initialState.trends?.map((item) => (
+            <CarouselItem key={item.id} {...item} />
+          ))}
+        </Carousel>
+      </Categories>
+
+      <Categories title="Originales de Platzi Video">
+        <Carousel>
+          {initialState.originals?.map((item) => (
             <CarouselItem key={item.id} {...item} />
           ))}
         </Carousel>
