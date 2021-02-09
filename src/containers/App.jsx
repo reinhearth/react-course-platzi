@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Search from "../components/Search";
 import Categories from "../components/Categories";
@@ -8,32 +8,38 @@ import Footer from "../components/Footer";
 
 import "../assets/styles/App.scss";
 
-const App = () => (
-  <div className="App">
-    <Header />
-    <Search />
-    <Categories title="Mi Lista">
-      <Carousel>
-        <CarouselItem />
-        <CarouselItem />
-        <CarouselItem />
-      </Carousel>
-    </Categories>
+const App = () => {
+  const [videos, setVideos] = useState([]);
+  // useState({ mylist: [], trends: [], originals: [] });
+  // we can use either Optional Chaining, like "videos.trends? || videos.mylist? or we can initialize props"
+  useEffect(() => {
+    fetch("http://localhost:3000/initalState")
+      .then((response) => response.json())
+      .then((data) => setVideos(data));
+  }, []);
 
-    <Categories title="Tendencias">
-      <Carousel>
-        <CarouselItem />
-        <CarouselItem />
-      </Carousel>
-    </Categories>
+  return (
+    <div className="App">
+      <Header />
+      <Search />
+      {videos.mylist?.length > 0 && (
+        <Categories title="Mi Lista">
+          <Carousel>
+            <CarouselItem />
+          </Carousel>
+        </Categories>
+      )}
+      <Categories title="Tendencias">
+        <Carousel>
+          {videos.trends?.map((item) => (
+            <CarouselItem key={item.id} {...item} />
+          ))}
+        </Carousel>
+      </Categories>
 
-    <Categories title="Favoritas">
-      <Carousel>
-        <CarouselItem />
-      </Carousel>
-    </Categories>
-    <Footer />
-  </div>
-);
+      <Footer />
+    </div>
+  );
+};
 
 export default App;
