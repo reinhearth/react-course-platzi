@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 
 // const API = "http://localhost:3000/initalState";
 
-const Home = ({myList, trends, originals}) => {
+const Home = ({ myList, trends, originals }) => {
   // const initialState = useInitialState(API);
 
   return (
@@ -18,7 +18,7 @@ const Home = ({myList, trends, originals}) => {
         <Categories title="Mi Lista">
           <Carousel>
             {myList.map((item) => (
-              <CarouselItem key={item.id} {...item} />
+              <CarouselItem key={item.id} {...item} isList/>
             ))}
           </Carousel>
         </Categories>
